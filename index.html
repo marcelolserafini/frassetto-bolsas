@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frassetto Bolsas | Vitrine Digital Premium & Ateliê</title>
+  <meta name="description"
+    content="Descubra a coleção exclusiva da Frassetto Bolsas. Arte em couro legítimo 100% feita à mão. Atendimento personalizado exclusivo via WhatsApp.">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Chart.js para Relatórios do Dashboard -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Cropper.js para Enquadramento Interativo de Fotos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+  <!-- Firebase App, Auth e Firestore (Compat Mode) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+</head>
+
+<body>
+
+  <!-- HEADER / NAVEGAÇÃO -->
+  <header>
+    <a href="#vitrine" class="logo">
+      Frassetto
+      <span>Bolsas</span>
+    </a>
+
+    <div class="menu-toggle" id="mobile-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav id="nav-menu">
+      <ul>
+        <li><a href="#vitrine" class="nav-link active" data-target="vitrine-view">Vitrine</a></li>
+        <li><a href="#vitrine" class="nav-link scroll-link" data-scroll="mais-vendidas">Mais Vendidas</a></li>
+        <li><a href="#vitrine" class="nav-link scroll-link" data-scroll="depoimentos">Depoimentos</a></li>
+        <li><a id="nav-whatsapp-link" href="https://wa.me/5548999999999" target="_blank" class="nav-link"><i class="fab fa-whatsapp"></i> Falar
+            com Ateliê</a></li>
+        <li><a href="#admin" class="nav-link nav-admin-btn" data-target="admin-view"><i class="fas fa-lock"></i>
+            Painel</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ==================== VIEW 1: VITRINE PRINCIPAL (HOME) ==================== -->
+  <section id="vitrine-view" class="view-section active">
+
+    <!-- HERO SECTION -->
+    <div class="hero-container">
+      <div class="hero-left">
+        <span class="hero-tagline">Ateliê Artesanal</span>
+        <h1 class="hero-title">Frassetto Bolsas</h1>
+        <p class="hero-subtitle" id="hero-subtitle">Uma fusão harmoniosa de sofisticação moderna com a alma do
+          artesanato clássico. Cada costura conta uma história de exclusividade, dedicação e paixão pelo design eterno.
+        </p>
+        <div class="hero-actions">
+          <a href="#vitrine" class="btn-primary scroll-link" data-scroll="catalogo">Ver Coleção <i
+              class="fas fa-arrow-right"></i></a>
+          <a id="hero-whatsapp-link" href="https://wa.me/5548999999999?text=Olá!%20Gostaria%20de%20solicitar%20um%20atendimento%20personalizado."
+            target="_blank" class="btn-secondary">Atendimento Premium</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-image-frame" id="hero-image-link">
+          <img id="hero-image"
+            src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=800&q=80"
+            alt="Bolsa Frassetto Destaque">
+          <div class="hero-badge">
+            <h4 id="hero-badge-title">Bolsa de Couro Isadora</h4>
+            <p id="hero-badge-desc">100% Feita à Mão • Costura Manual Premium</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BANNER EDITORIAL DE CONCEITO -->
+    <div class="editorial-banner">
+      <div class="banner-glow-left"></div>
+      <div class="banner-glow-right"></div>
+      <div class="banner-content">
+        <span class="banner-overline"><i class="fas fa-feather-alt"></i> Filosofia do Ateliê</span>
+        <h2 class="banner-title">
+          <span class="word-line">O luxo <em>não é</em> sobre produção em massa,</span>
+          <span class="word-line">mas sobre o <em>tempo</em>, o <em>carinho</em></span>
+          <span class="word-line">e o cuidado em criar algo <em>único</em></span>
+          <span class="word-line word-line--accent">para durar gerações.</span>
+        </h2>
+        <div class="banner-footer">
+          <span class="banner-divider"></span>
+          <span class="banner-author">Ateliê Frassetto</span>
+          <span class="banner-divider"></span>
+        </div>
+        <div class="banner-pills">
+          <span class="banner-pill"><i class="fas fa-hand-sparkles"></i> 100% Artesanal</span>
+          <span class="banner-pill"><i class="fas fa-heart"></i> Feito com Amor</span>
+          <span class="banner-pill"><i class="fas fa-infinity"></i> Para Gerações</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SESSÃO "MAIS VENDIDAS" -->
+    <section id="mais-vendidas" class="featured-section">
+      <div class="section-header">
+        <span class="section-tag">Coleções em Foco</span>
+        <h2 class="section-title">As Mais Desejadas</h2>
+      </div>
+      <div class="featured-grid" id="featured-products-container">
+        <!-- Injetado por JS -->
+      </div>
+    </section>
+
+    <!-- CATÁLOGO GERAL / VITRINE -->
+    <section id="catalogo" class="vitrine-section">
+      <div class="section-header">
+        <span class="section-tag">Nossa Vitrine</span>
+        <h2 class="section-title">Conheça a Coleção Completa</h2>
+      </div>
+      <div class="vitrine-grid" id="all-products-container">
+        <!-- Injetado por JS -->
+      </div>
+    </section>
+
+    <!-- SESSÃO DE DEPOIMENTOS -->
+    <section id="depoimentos" class="testimonials-section">
+      <div class="section-header">
+        <span class="section-tag">Relatos do Ateliê</span>
+        <h2 class="section-title">O que dizem nossas clientes</h2>
+      </div>
+      <div class="testimonials-slider" id="testimonials-container">
+        <!-- Injetado por JS -->
+      </div>
+    </section>
+
+  </section>
+
+
+  <!-- ==================== VIEW 2: PÁGINA DETALHADA DO PRODUTO ==================== -->
+  <section id="product-view" class="view-section">
+    <div class="product-detail-container" id="product-detail-content">
+      <!-- Injetado Dinamicamente via JavaScript -->
+    </div>
+  </section>
+
+
+  <!-- ==================== VIEW 3: TELA DE LOGIN DO ADMINISTRADOR ==================== -->
+  <section id="login-view" class="view-section">
+    <div style="display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 200px); padding: 2rem;">
+      <div class="analytics-card" style="width: 100%; max-width: 420px; padding: 3rem; text-align: center; background: white; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-medium);">
+        <h2 style="font-family: var(--font-serif); font-size: 2.2rem; margin-bottom: 0.5rem; color: var(--text-primary);">Acesso Restrito</h2>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 2.5rem; text-transform: uppercase; letter-spacing: 2px;">Painel Frassetto Bolsas</p>
+        
+        <form id="login-form">
+          <div class="form-group" style="text-align: left;">
+            <label class="form-label" for="login-email">E-mail do Administrador</label>
+            <input type="email" class="form-control" id="login-email" required placeholder="admin@frassettobolsas.com">
+          </div>
+          <div class="form-group" style="text-align: left; margin-bottom: 2rem;">
+            <label class="form-label" for="login-password">Senha</label>
+            <input type="password" class="form-control" id="login-password" required placeholder="••••••••">
+          </div>
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 1rem;"><i class="fas fa-sign-in-alt"></i> Entrar no Painel</button>
+        </form>
+        <p id="login-error-msg" style="color: #C85353; font-size: 0.85rem; margin-top: 1.5rem; display: none; font-weight: 500;"></p>
+        <p id="demo-login-hint" style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 1.2rem; display: none; font-style: italic; line-height: 1.4;"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== VIEW 4: DASHBOARD ADMINISTRATIVO ==================== -->
+  <section id="admin-view" class="view-section">
+    <div class="admin-container">
+
+      <!-- Lateral de Navegação do Painel -->
+      <aside class="admin-sidebar">
+        <div class="admin-logo-area">
+          <h3>Frassetto</h3>
+          <p>Painel de Gestão</p>
+        </div>
+        <ul class="admin-menu">
+          <li class="admin-menu-item active" data-tab="dashboard-tab">
+            <a href="#admin"><i class="fas fa-chart-line"></i> Resumo Geral</a>
+          </li>
+          <li class="admin-menu-item" data-tab="produtos-tab">
+            <a href="#admin"><i class="fas fa-box-open"></i> Produtos</a>
+          </li>
+          <li class="admin-menu-item" data-tab="vendas-tab">
+            <a href="#admin"><i class="fas fa-receipt"></i> Vendas</a>
+          </li>
+          <li class="admin-menu-item" data-tab="config-tab">
+            <a href="#admin"><i class="fas fa-sliders-h"></i> Configurações</a>
+          </li>
+          <li class="admin-menu-item">
+            <a href="#vitrine" class="btn-back-vitrine"><i class="fas fa-store"></i> Voltar à Loja</a>
+          </li>
+          <li class="admin-menu-item" id="admin-logout-btn">
+            <a href="#vitrine"><i class="fas fa-sign-out-alt"></i> Sair do Painel</a>
+          </li>
+        </ul>
+      </aside>
+
+      <!-- Conteúdo Administrativo -->
+      <main class="admin-content-area">
+
+        <!-- ==================== TAB 1: METRICAS E GRAFICOS ==================== -->
+        <div id="dashboard-tab" class="admin-tab-content active">
+          <div class="admin-view-header">
+            <div class="admin-view-title">
+              <h2>Visão Geral Financeira</h2>
+              <p>Métricas de vendas acumuladas no ateliê</p>
+            </div>
+            <button class="btn-primary" id="open-sale-modal-btn">
+              <i class="fas fa-plus"></i> Registrar Venda
+            </button>
+          </div>
+
+          <!-- KPI Cards -->
+          <div class="kpis-grid">
+            <div class="kpi-card">
+              <span class="kpi-title">Faturamento Total</span>
+              <div class="kpi-value" id="kpi-total-vendas">R$ 0,00</div>
+              <div class="kpi-footer"><i class="fas fa-arrow-up"></i> Total Bruto Recebido</div>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-title">Total Gasto (Custo)</span>
+              <div class="kpi-value" id="kpi-total-custos">R$ 0,00</div>
+              <div class="kpi-footer negative"><i class="fas fa-arrow-down"></i> Gastos de Fabricação</div>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-title">Lucro Líquido</span>
+              <div class="kpi-value" id="kpi-lucro-liquido">R$ 0,00</div>
+              <div class="kpi-footer" id="kpi-lucro-footer"><i class="fas fa-wallet"></i> Ganhos Reais</div>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-title">Margem Média</span>
+              <div class="kpi-value" id="kpi-margem-lucro">0%</div>
+              <div class="kpi-footer"><i class="fas fa-percent"></i> Retorno Médio</div>
+            </div>
+          </div>
+
+          <!-- Seção de Relatórios & Gráficos -->
+          <div class="analytics-grid">
+            <div class="analytics-card">
+              <h4>Desempenho Mensal de Vendas</h4>
+              <div style="position: relative; height: 320px; width: 100%;">
+                <canvas id="salesMonthlyChart"></canvas>
+              </div>
+            </div>
+            <div class="analytics-card">
+              <h4>Participação dos Produtos</h4>
+              <div style="position: relative; height: 320px; width: 100%;">
+                <canvas id="productsShareChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 2: GERENCIAMENTO DE PRODUTOS ==================== -->
+        <div id="produtos-tab" class="admin-tab-content">
+          <div class="admin-view-header">
+            <div class="admin-view-title">
+              <h2>Catálogo de Bolsas</h2>
+              <p>Cadastre, modifique e monitore o estoque dos produtos da vitrine</p>
+            </div>
+            <button class="btn-primary" id="open-product-modal-btn">
+              <i class="fas fa-plus"></i> Novo Produto
+            </button>
+          </div>
+
+          <div class="analytics-card table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Foto</th>
+                  <th>Produto</th>
+                  <th>Preço de Venda</th>
+                  <th>Custo Base</th>
+                  <th>Estoque</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="admin-products-table-body">
+                <!-- Preenchido dinamicamente por JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 3: REGISTRO DE VENDAS ==================== -->
+        <div id="vendas-tab" class="admin-tab-content">
+          <div class="admin-view-header">
+            <div class="admin-view-title">
+              <h2>Histórico de Vendas</h2>
+              <p>Registro completo de transações fechadas via WhatsApp</p>
+            </div>
+            <button class="btn-primary" id="open-sale-modal-btn-alt">
+              <i class="fas fa-plus"></i> Lançar Venda
+            </button>
+          </div>
+
+          <div class="analytics-card table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Cliente</th>
+                  <th>Produto</th>
+                  <th>Valor Venda</th>
+                  <th>Custo Produção</th>
+                  <th>Lucro Gerado</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="admin-sales-table-body">
+                <!-- Preenchido dinamicamente por JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ==================== TAB 4: CONFIGURAÇÕES DA HOME ==================== -->
+        <div id="config-tab" class="admin-tab-content">
+          <div class="admin-view-header">
+            <div class="admin-view-title">
+              <h2>Configurações do Ateliê</h2>
+              <p>Personalize os textos do banner e a bolsa em destaque na página inicial</p>
+            </div>
+          </div>
+
+          <div class="analytics-card" style="max-width: 700px;">
+            <form id="config-form">
+              <div class="form-group">
+                <label class="form-label" for="config-hero-subtitle">Subtítulo da Hero Section</label>
+                <textarea class="form-control" id="config-hero-subtitle" rows="3" required
+                  placeholder="Texto de introdução elegante do ateliê..."></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="config-hero-product">Bolsa em Destaque (Hero)</label>
+                <select class="form-control" id="config-hero-product" required>
+                  <!-- Preenchido via JS -->
+                </select>
+                <small style="font-size:0.75rem; color: var(--text-secondary); margin-top:4px; display:block;">
+                  A bolsa selecionada fornecerá automaticamente a imagem de catálogo, o nome e o link de detalhes para o
+                  banner principal.
+                </small>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label" for="config-whatsapp-phone">Número do WhatsApp (com DDI e DDD)</label>
+                <input type="text" class="form-control" id="config-whatsapp-phone" required placeholder="Ex: 5548999999999">
+                <small style="font-size:0.75rem; color: var(--text-secondary); margin-top:4px; display:block;">
+                  Coloque o código do país (55 para Brasil), o DDD e o número completo (tudo junto, sem espaços ou traços).
+                </small>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="config-whatsapp-template">Mensagem Personalizada da Bolsa</label>
+                <textarea class="form-control" id="config-whatsapp-template" rows="3" required
+                  placeholder="Olá, Ateliê Frassetto! Gostaria de conversar sobre a linda bolsa artesanal *{nome}* ({preco}) que visualizei em sua vitrine digital premium."></textarea>
+                <small style="font-size:0.75rem; color: var(--text-secondary); margin-top:4px; display:block;">
+                  Use <strong>{nome}</strong> para inserir automaticamente o nome da bolsa e <strong>{preco}</strong> para o preço formatado.
+                </small>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="config-imgbb-key">Chave de API do ImgBB (Upload de Imagens)</label>
+                <input type="text" class="form-control" id="config-imgbb-key"
+                  placeholder="Insira sua API Key do ImgBB...">
+                <small style="font-size:0.75rem; color: var(--text-secondary); margin-top:4px; display:block;">
+                  Obtenha uma chave gratuita em <a href="https://api.imgbb.com/" target="_blank"
+                    style="text-decoration:underline; color:var(--color-accent);">api.imgbb.com</a> para fazer o
+                  upload de imagens locais do seu dispositivo.
+                </small>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Salvar Alterações</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Configuração de Conexão com Firebase -->
+          <div class="analytics-card" style="max-width: 700px; margin-top: 2.5rem;">
+            <h4 style="font-family: var(--font-serif); font-size: 1.4rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--bg-primary); padding-bottom: 0.8rem;">Conexão Firebase (Nuvem Sem Expor Chaves no Código)</h4>
+            <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom: 1.5rem;">Para evitar expor suas chaves de API do Firebase publicamente no código fonte (ex: se subir o código para o GitHub Pages), você pode salvá-las de forma segura aqui. Elas ficarão salvas apenas no seu navegador e não no arquivo de código!</p>
+            
+            <form id="firebase-config-form">
+              <div class="form-group">
+                <label class="form-label" for="fb-apiKey">API Key (Chave de API)</label>
+                <input type="password" class="form-control" id="fb-apiKey" required placeholder="AIzaSy...">
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="fb-projectId">Project ID (ID do Projeto)</label>
+                  <input type="text" class="form-control" id="fb-projectId" required placeholder="frassetto-bolsas-...">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="fb-authDomain">Auth Domain</label>
+                  <input type="text" class="form-control" id="fb-authDomain" required placeholder="seu-projeto.firebaseapp.com">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="fb-messagingSenderId">Messaging Sender ID</label>
+                  <input type="text" class="form-control" id="fb-messagingSenderId" required placeholder="107628...">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="fb-appId">App ID</label>
+                  <input type="text" class="form-control" id="fb-appId" required placeholder="1:107628...">
+                </div>
+              </div>
+              <div class="form-actions" style="margin-top: 1rem; padding-top: 1rem;">
+                <button type="button" class="btn-secondary" id="clear-fb-btn" style="color:#C85353; border-color:#C85353;"><i class="fas fa-trash"></i> Limpar Conexão</button>
+                <button type="submit" class="btn-primary"><i class="fas fa-plug"></i> Salvar e Conectar</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Gerenciador de Depoimentos -->
+          <div class="analytics-card" style="max-width: 700px; margin-top: 2.5rem;">
+            <h4
+              style="font-family: var(--font-serif); font-size: 1.4rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--bg-primary); padding-bottom: 0.8rem;">
+              Depoimentos de Clientes</h4>
+
+            <div id="admin-testimonials-list"
+              style="margin-bottom: 2.5rem; display: flex; flex-direction: column; gap: 1rem;">
+              <!-- Injetado via JS -->
+            </div>
+
+            <h4
+              style="font-family: var(--font-serif); font-size: 1.4rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--bg-primary); padding-bottom: 0.8rem;">
+              Adicionar Novo Depoimento</h4>
+            <form id="testimonial-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="test-nome">Nome do Cliente</label>
+                  <input type="text" class="form-control" id="test-nome" required placeholder="Ex: Gabriela M.">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="test-cidade">Cidade / Estado</label>
+                  <input type="text" class="form-control" id="test-cidade" required placeholder="Ex: São Paulo - SP">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="test-estrelas">Classificação</label>
+                  <select class="form-control" id="test-estrelas" required>
+                    <option value="5">⭐⭐⭐⭐⭐ (5 Estrelas)</option>
+                    <option value="4">⭐⭐⭐⭐ (4 Estrelas)</option>
+                    <option value="3">⭐⭐⭐ (3 Estrelas)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="test-texto">Depoimento</label>
+                <textarea class="form-control" id="test-texto" rows="3" required
+                  placeholder="Escreva o elogio da cliente sobre os produtos ou atendimento..."></textarea>
+              </div>
+              <button type="submit" class="btn-primary" style="padding: 0.8rem 1.8rem;"><i class="fas fa-plus"></i>
+                Salvar Depoimento</button>
+            </form>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>Frassetto Bolsas</h3>
+        <p>Um ateliê dedicado a criar bolsas artesanais exclusivas com acabamento de alta costura, designs refinados e
+          couros selecionados de forma responsável.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Fale Conosco</h4>
+        <ul class="footer-links">
+          <li><a id="footer-whatsapp-link" href="https://wa.me/5548999999999" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp: (48)
+              99999-9999</a></li>
+          <li><a href="https://instagram.com/frassettobolsas" target="_blank"><i class="fab fa-instagram"></i>
+              Instagram: @frassettobolsas</a></li>
+          <li>
+            <p><i class="fas fa-envelope"></i> contato@frassettobolsas.com.br</p>
+          </li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Atendimento</h4>
+        <p>Segunda a Sexta: 09h às 18h<br>Sábado: 09h às 13h<br>Porto meira Foz do Iguacu/PR</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Frassetto Bolsas. Todos os direitos reservados. Feito com afeto artesanal.</p>
+    </div>
+  </footer>
+
+  <!-- ==================== MODAIS ==================== -->
+
+  <!-- 1. MODAL DE CADASTRO/EDIÇÃO DE PRODUTO -->
+  <div class="modal-overlay" id="product-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="product-modal-title">Novo Produto</h3>
+        <button class="close-modal-btn" id="close-product-modal"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="product-form">
+        <input type="hidden" id="form-product-id">
+        <div class="form-group">
+          <label class="form-label" for="prod-nome">Nome do Produto</label>
+          <input type="text" class="form-control" id="prod-nome" required placeholder="Ex: Bolsa Isadora Terracota">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="prod-descricao">Descrição Vitrine (Curta)</label>
+          <textarea class="form-control" id="prod-descricao" rows="2" required
+            placeholder="Descreva brevemente para a listagem da vitrine..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="prod-detalhes">Especificações e Detalhes Completo</label>
+          <textarea class="form-control" id="prod-detalhes" rows="3" required
+            placeholder="Costura manual, forro camurça, metais banhados a ouro, alça transversal..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="prod-preco">Preço de Venda (R$)</label>
+            <input type="number" step="0.01" class="form-control" id="prod-preco" required placeholder="580.00">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="prod-custo">Custo de Fabricação (R$)</label>
+            <input type="number" step="0.01" class="form-control" id="prod-custo" required placeholder="180.00">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="prod-estoque">Quantidade em Estoque</label>
+            <input type="number" class="form-control" id="prod-estoque" required placeholder="5">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="prod-material">Material Principal</label>
+            <input type="text" class="form-control" id="prod-material" placeholder="Ex: Couro Legítimo"
+              value="Couro Legítimo">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="prod-imagem">URLs das Imagens (Separadas por vírgula)</label>
+          <input type="text" class="form-control" id="prod-imagem" required
+            placeholder="Cole links de imagens Unsplash ou de hospedagem de fotos...">
+          <small style="font-size:0.7rem; color: var(--text-secondary); margin-top:4px; display:block;">Pode usar
+            imagens de exemplo do Unsplash para testar.</small>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="prod-upload">Ou Fazer Upload de Foto Local (ImgBB)</label>
+          <input type="file" class="form-control" id="prod-upload" accept="image/*">
+          <small id="upload-status"
+            style="font-size:0.75rem; color: var(--color-olive); margin-top:4px; display:block; font-weight: 500;"></small>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="prod-cores">Cores Disponíveis (Separadas por vírgula)</label>
+          <input type="text" class="form-control" id="prod-cores" placeholder="Ex: Terracota, Areia, Verde Oliva"
+            value="Terracota, Areia">
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="cancel-product-btn">Cancelar</button>
+          <button type="submit" class="btn-primary">Salvar Produto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. MODAL DE REGISTRO DE VENDA -->
+  <div class="modal-overlay" id="sale-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="sale-modal-title">Registrar Venda Manual</h3>
+        <button class="close-modal-btn" id="close-sale-modal"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="sale-form">
+        <input type="hidden" id="form-sale-id">
+        <div class="form-group">
+          <label class="form-label" for="sale-produto">Selecionar Produto</label>
+          <select class="form-control" id="sale-produto" required>
+            <!-- Carregado via JS -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="sale-cliente">Nome da Cliente</label>
+          <input type="text" class="form-control" id="sale-cliente" required placeholder="Ex: Mariana Albuquerque">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="sale-valor">Valor Efetivo da Venda (R$)</label>
+            <input type="number" step="0.01" class="form-control" id="sale-valor" required placeholder="Ex: 580.00">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="sale-data">Data da Venda</label>
+            <input type="date" class="form-control" id="sale-data" required>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="cancel-sale-btn">Cancelar</button>
+          <button type="submit" class="btn-primary">Registrar Venda</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. MODAL DE RECORTE DE IMAGEM (CROPPER) -->
+  <div class="modal-overlay" id="cropper-modal" style="z-index: 1100;">
+    <div class="modal-box" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3 style="font-family: var(--font-serif); font-size: 1.6rem;">Enquadrar Bolsa</h3>
+        <button type="button" class="close-modal-btn" id="close-cropper-modal"><i class="fas fa-times"></i></button>
+      </div>
+      <div
+        style="max-height: 380px; overflow: hidden; display: flex; justify-content: center; background-color: #FAF7F2; border-radius: var(--border-radius-md); border: 1px solid var(--bg-tertiary); margin-bottom: 1.5rem; padding: 10px;">
+        <img id="cropper-image" src="" style="max-width: 100%; max-height: 340px; display: block;">
+      </div>
+      <div class="form-actions" style="margin-top: 0; padding-top: 1rem; border-top: 1px solid var(--bg-primary);">
+        <button type="button" class="btn-secondary" id="cancel-crop-btn">Cancelar</button>
+        <button type="button" class="btn-primary" id="confirm-crop-btn"><i class="fas fa-crop-alt"></i> Cortar e
+          Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTÃO FLUTUANTE WHATSAPP -->
+  <a id="float-whatsapp-link" href="https://wa.me/5548999999999?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20as%20bolsas%20do%20ateliê."
+    target="_blank" class="whatsapp-float-btn" title="Falar Conosco no WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- ARQUIVO LOGIC JS -->
+  <script src="script.js"></script>
+</body>
+
+</html>
