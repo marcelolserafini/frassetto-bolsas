@@ -153,27 +153,70 @@
   </section>
 
 
-  <!-- ==================== VIEW 3: TELA DE LOGIN DO ADMINISTRADOR ==================== -->
+  <!-- ==================== VIEW 3: TELA DE LOGIN / SETUP DO ADMINISTRADOR ==================== -->
   <section id="login-view" class="view-section">
-    <div style="display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 200px); padding: 2rem;">
-      <div class="analytics-card" style="width: 100%; max-width: 420px; padding: 3rem; text-align: center; background: white; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-medium);">
-        <h2 style="font-family: var(--font-serif); font-size: 2.2rem; margin-bottom: 0.5rem; color: var(--text-primary);">Acesso Restrito</h2>
-        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 2.5rem; text-transform: uppercase; letter-spacing: 2px;">Painel Frassetto Bolsas</p>
-        
-        <form id="login-form">
-          <div class="form-group" style="text-align: left;">
-            <label class="form-label" for="login-email">E-mail do Administrador</label>
-            <input type="email" class="form-control" id="login-email" required placeholder="admin@frassettobolsas.com">
-          </div>
-          <div class="form-group" style="text-align: left; margin-bottom: 2rem;">
-            <label class="form-label" for="login-password">Senha</label>
-            <input type="password" class="form-control" id="login-password" required placeholder="••••••••">
-          </div>
-          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 1rem;"><i class="fas fa-sign-in-alt"></i> Entrar no Painel</button>
-        </form>
-        <p id="login-error-msg" style="color: #C85353; font-size: 0.85rem; margin-top: 1.5rem; display: none; font-weight: 500;"></p>
-        <p id="demo-login-hint" style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 1.2rem; display: none; font-style: italic; line-height: 1.4;"></p>
+    <div style="display: flex; justify-content: center; align-items: flex-start; min-height: calc(100vh - 200px); padding: 3rem 2rem;">
+
+      <!-- PAINEL A: Firebase NÃO configurado — exibido pelo JS -->
+      <div id="firebase-setup-panel" style="display: none; width: 100%; max-width: 520px;">
+        <div class="analytics-card" style="padding: 3rem; text-align: center; background: white; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-medium);">
+          <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔧</div>
+          <h2 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 0.5rem; color: var(--text-primary);">Configuração Inicial</h2>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.6;">Para acessar o painel, conecte o Firebase do seu projeto. As chaves ficam salvas apenas neste navegador e nunca vão para o código público.</p>
+          <form id="login-firebase-setup-form">
+            <div class="form-group" style="text-align: left;">
+              <label class="form-label" for="setup-apiKey">API Key</label>
+              <input type="password" class="form-control" id="setup-apiKey" required placeholder="AIzaSy...">
+            </div>
+            <div class="form-row">
+              <div class="form-group" style="text-align: left;">
+                <label class="form-label" for="setup-projectId">Project ID</label>
+                <input type="text" class="form-control" id="setup-projectId" required placeholder="meu-projeto-123">
+              </div>
+              <div class="form-group" style="text-align: left;">
+                <label class="form-label" for="setup-authDomain">Auth Domain</label>
+                <input type="text" class="form-control" id="setup-authDomain" required placeholder="seu-projeto.firebaseapp.com">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group" style="text-align: left;">
+                <label class="form-label" for="setup-messagingSenderId">Sender ID</label>
+                <input type="text" class="form-control" id="setup-messagingSenderId" required placeholder="1076289...">
+              </div>
+              <div class="form-group" style="text-align: left;">
+                <label class="form-label" for="setup-appId">App ID</label>
+                <input type="text" class="form-control" id="setup-appId" required placeholder="1:107628...">
+              </div>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 1rem; margin-top: 0.5rem;">
+              <i class="fas fa-plug"></i> Conectar e Continuar
+            </button>
+          </form>
+          <p id="setup-error-msg" style="color: #C85353; font-size: 0.82rem; margin-top: 1rem; display: none;"></p>
+        </div>
       </div>
+
+      <!-- PAINEL B: Firebase configurado — login real -->
+      <div id="login-firebase-panel" style="display: none; width: 100%; max-width: 420px;">
+        <div class="analytics-card" style="padding: 3rem; text-align: center; background: white; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-medium);">
+          <h2 style="font-family: var(--font-serif); font-size: 2.2rem; margin-bottom: 0.5rem; color: var(--text-primary);">Acesso Restrito</h2>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 2.5rem; text-transform: uppercase; letter-spacing: 2px;">Painel Frassetto Bolsas</p>
+          <form id="login-form">
+            <div class="form-group" style="text-align: left;">
+              <label class="form-label" for="login-email">E-mail do Administrador</label>
+              <input type="email" class="form-control" id="login-email" required placeholder="admin@seudominio.com">
+            </div>
+            <div class="form-group" style="text-align: left; margin-bottom: 2rem;">
+              <label class="form-label" for="login-password">Senha</label>
+              <input type="password" class="form-control" id="login-password" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 1rem;"><i class="fas fa-sign-in-alt"></i> Entrar no Painel</button>
+          </form>
+          <p id="login-error-msg" style="color: #C85353; font-size: 0.85rem; margin-top: 1.5rem; display: none; font-weight: 500;"></p>
+          <p style="font-size: 0.72rem; color: var(--text-secondary); margin-top: 2rem; cursor: pointer; text-decoration: underline;" onclick="resetFirebaseConfig()">Reconfigurar Firebase</p>
+        </div>
+      </div>
+
     </div>
   </section>
 

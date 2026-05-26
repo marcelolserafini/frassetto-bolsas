@@ -301,18 +301,21 @@ function handleRouting() {
     view.classList.add("active");
     renderProductDetail(productId);
   } else if (hash === "#admin") {
-    if (isFirebaseActive) {
-      if (!auth.currentUser) {
-        const loginView = document.getElementById("login-view");
-        if (loginView) loginView.classList.add("active");
-        return;
-      }
-    } else {
-      if (localStorage.getItem("fake_auth") !== "true") {
-        const loginView = document.getElementById("login-view");
-        if (loginView) loginView.classList.add("active");
-        return;
-      }
+    if (!isFirebaseActive) {
+      // Firebase não configurado: mostrar painel de setup
+      const loginView = document.getElementById("login-view");
+      if (loginView) loginView.classList.add("active");
+      document.getElementById("firebase-setup-panel").style.display = "block";
+      document.getElementById("login-firebase-panel").style.display = "none";
+      return;
+    }
+    if (!auth.currentUser) {
+      // Firebase configurado mas não logado: mostrar login
+      const loginView = document.getElementById("login-view");
+      if (loginView) loginView.classList.add("active");
+      document.getElementById("firebase-setup-panel").style.display = "none";
+      document.getElementById("login-firebase-panel").style.display = "block";
+      return;
     }
     const view = document.getElementById("admin-view");
     if (view) {
@@ -354,14 +357,8 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Mostrar dica de credenciais apenas em modo Offline/Mock
-  if (!isFirebaseActive) {
-    const hintEl = document.getElementById("demo-login-hint");
-    if (hintEl) {
-      hintEl.textContent = "Modo de demonstração ativo. Use: admin@frassettobolsas.com / admin123";
-      hintEl.style.display = "block";
-    }
-  }
+  // Limpeza de sessão de teste antiga (segurança)
+  localStorage.removeItem("fake_auth");
 });
 
 // ==================== 3. EVENT LISTENERS GERAIS ====================
@@ -645,7 +642,7 @@ function setupEventListeners() {
     document.getElementById("close-cropper-modal").addEventListener("click", closeCropper);
   }
 
-  // Form de Login do Administrador
+  // Form de Login Firebase do Administrador
   const loginForm = document.getElementById("login-form");
   if (loginForm) {
     loginForm.addEventListener("submit", (e) => {
@@ -656,34 +653,38 @@ function setupEventListeners() {
 
       if (errorMsg) errorMsg.style.display = "none";
 
-      if (isFirebaseActive) {
-        auth.signInWithEmailAndPassword(email, pass)
-          .then(() => {
-            const loginView = document.getElementById("login-view");
-            if (loginView) loginView.classList.remove("active");
-            handleRouting();
-          })
-          .catch((error) => {
-            console.error("Login error:", error);
-            if (errorMsg) {
-              errorMsg.textContent = "Erro: E-mail ou senha inválidos.";
-              errorMsg.style.display = "block";
-            }
-          });
-      } else {
-        // Fallback local: admin@frassettobolsas.com / admin123
-        if (email === "admin@frassettobolsas.com" && pass === "admin123") {
-          localStorage.setItem("fake_auth", "true");
+      auth.signInWithEmailAndPassword(email, pass)
+        .then(() => {
           const loginView = document.getElementById("login-view");
           if (loginView) loginView.classList.remove("active");
           handleRouting();
-        } else {
+        })
+        .catch((error) => {
+          console.error("Login error:", error);
           if (errorMsg) {
-            errorMsg.textContent = "Erro: E-mail ou senha incorretos.";
+            errorMsg.textContent = "Erro: E-mail ou senha inválidos.";
             errorMsg.style.display = "block";
           }
-        }
-      }
+        });
+    });
+  }
+
+  // Formulário de Setup do Firebase na tela de login inicial
+  const loginSetupForm = document.getElementById("login-firebase-setup-form");
+  if (loginSetupForm) {
+    loginSetupForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const keys = {
+        apiKey: document.getElementById("setup-apiKey").value.trim(),
+        projectId: document.getElementById("setup-projectId").value.trim(),
+        authDomain: document.getElementById("setup-authDomain").value.trim(),
+        messagingSenderId: document.getElementById("setup-messagingSenderId").value.trim(),
+        appId: document.getElementById("setup-appId").value.trim(),
+        storageBucket: `${document.getElementById("setup-projectId").value.trim()}.firebasestorage.app`
+      };
+      localStorage.setItem("frassetto_firebase_keys", JSON.stringify(keys));
+      alert("Firebase configurado! Recarregando para conectar...");
+      window.location.reload();
     });
   }
 
@@ -692,16 +693,11 @@ function setupEventListeners() {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      if (isFirebaseActive) {
-        auth.signOut()
-          .then(() => {
-            window.location.hash = "#vitrine";
-          })
-          .catch(console.error);
-      } else {
-        localStorage.removeItem("fake_auth");
-        window.location.hash = "#vitrine";
-      }
+      auth.signOut()
+        .then(() => {
+          window.location.hash = "#vitrine";
+        })
+        .catch(console.error);
     });
   }
 
@@ -738,6 +734,15 @@ function setupEventListeners() {
     });
   }
 }
+
+// Exposta globalmente para o botão "Reconfigurar Firebase" na tela de login
+window.resetFirebaseConfig = function () {
+  if (confirm("Tem certeza que deseja reconfigurar o Firebase? Você precisará inserir as chaves novamente.")) {
+    localStorage.removeItem("frassetto_firebase_keys");
+    localStorage.removeItem("fake_auth");
+    window.location.reload();
+  }
+};
 
 // ==================== 4. PROCESSADORES DE MODAIS E FORMULÁRIOS ====================
 
