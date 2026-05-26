@@ -735,15 +735,6 @@ function setupEventListeners() {
   }
 }
 
-// Exposta globalmente para o botão "Reconfigurar Firebase" na tela de login
-window.resetFirebaseConfig = function () {
-  if (confirm("Tem certeza que deseja reconfigurar o Firebase? Você precisará inserir as chaves novamente.")) {
-    localStorage.removeItem("frassetto_firebase_keys");
-    localStorage.removeItem("fake_auth");
-    window.location.reload();
-  }
-};
-
 // ==================== 4. PROCESSADORES DE MODAIS E FORMULÁRIOS ====================
 
 function openModal(modal) {
