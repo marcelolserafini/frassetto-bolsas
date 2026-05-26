@@ -193,9 +193,11 @@ nav a:hover::after, nav a.active::after {
 .menu-toggle {
   display: none;
   flex-direction: column;
-  gap: 5px;
-  width: 30px;
+  gap: 6px;
+  width: 28px;
+  cursor: pointer;
   z-index: 101;
+  padding: 4px;
 }
 
 .menu-toggle span {
@@ -203,6 +205,20 @@ nav a:hover::after, nav a.active::after {
   height: 2px;
   background-color: var(--text-primary);
   transition: var(--transition-smooth);
+  transform-origin: center;
+}
+
+/* Transforma as 3 linhas em um 'X' animado de forma elegante */
+.menu-toggle.active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
 }
 
 /* Transições de Views do SPA */
@@ -1467,27 +1483,44 @@ footer {
 
 @media (max-width: 768px) {
   header {
-    padding: 1rem 5%;
+    padding: 1rem 6%;
+  }
+  .logo {
+    font-size: 1.4rem;
+  }
+  .logo span {
+    font-size: 1rem;
+    letter-spacing: 4px;
   }
   nav {
     position: fixed;
     top: 0;
     right: -100%;
-    width: 80%;
+    width: 75%;
     height: 100vh;
     background-color: var(--bg-primary);
-    box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+    box-shadow: -10px 0 30px rgba(110, 98, 89, 0.15);
     z-index: 100;
     transition: var(--transition-smooth);
-    padding: 6rem 3rem;
+    padding: 6rem 2.5rem;
+    border-left: 1px solid rgba(230, 220, 208, 0.5);
   }
   nav.active {
     right: 0;
   }
   nav ul {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 2rem;
+    align-items: stretch;
+    gap: 1.5rem;
+  }
+  nav a {
+    display: block;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(230, 220, 208, 0.3);
+  }
+  .nav-admin-btn {
+    text-align: center;
+    margin-top: 1rem;
   }
   .menu-toggle {
     display: flex;
