@@ -437,8 +437,22 @@ function renderVitrine() {
   featuredContainer.innerHTML = "";
   allContainer.innerHTML = "";
 
-  const featuredProds = products.filter(p => p.destaque === true).slice(0, 3);
-  const displayFeatured = featuredProds.length > 0 ? featuredProds : products.slice(0, 3);
+  // 1. Calcular dinamicamente a quantidade de vendas por produto
+  const salesCountMap = {};
+  sales.forEach(sale => {
+    // Agrupa por produtoId
+    salesCountMap[sale.produtoId] = (salesCountMap[sale.produtoId] || 0) + 1;
+  });
+
+  // 2. Ordenar todos os produtos pela quantidade de vendas decrescente
+  const sortedBySales = [...products].sort((a, b) => {
+    const salesA = salesCountMap[a.id] || 0;
+    const salesB = salesCountMap[b.id] || 0;
+    return salesB - salesA; // Mais vendidos primeiro
+  });
+
+  // 3. Obter as 3 bolsas que mais venderam (se não houver vendas registradas, pega as 3 primeiras)
+  const displayFeatured = sortedBySales.slice(0, 3);
 
   displayFeatured.forEach(p => {
     featuredContainer.appendChild(createProductCard(p, true));
