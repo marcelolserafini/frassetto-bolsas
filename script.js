@@ -29,18 +29,19 @@ let isFirebaseActive = false;
 try {
   firebase.initializeApp(firebaseConfig);
   
-  // Ativação do Firebase App Check para proteção contra bots e abuso de API em Produção
-  // Utiliza reCAPTCHA v3 Enterprise ou reCAPTCHA v3 padrão
+  // Ativação do Firebase App Check opcional para produção (comentar se testar localmente em localhost)
+  /*
   const appCheck = firebase.appCheck();
   appCheck.activate(
     new firebase.appCheck.ReCaptchaV3Provider('6Ld-pZEqAAAAAGZJ1z4gW7u7V4sJp8XyqYt1J7nC'),
-    true // autoRefreshEnabled
+    true
   );
+  */
   
   db = firebase.firestore();
   auth = firebase.auth();
   isFirebaseActive = true;
-  console.log("Firebase & App Check conectados com sucesso!");
+  console.log("Firebase conectado com sucesso!");
 } catch (error) {
   console.error("Falha ao inicializar o Firebase. Rodando em modo de demonstração local estrita.", error);
 }
