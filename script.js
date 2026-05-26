@@ -1135,7 +1135,7 @@ function handleProductFormSubmit(e) {
     custo: parseFloat(document.getElementById("prod-custo").value),
     estoque: parseInt(document.getElementById("prod-estoque").value),
     material: SecurityUtils.sanitizeString(document.getElementById("prod-material").value),
-    imagens: rawImagens.map(SecurityUtils.sanitizeString),
+    imagens: rawImagens,
     cores: document.getElementById("prod-cores").value.split(",").map(c => SecurityUtils.sanitizeString(c.trim())).filter(c => c !== "")
   };
 
