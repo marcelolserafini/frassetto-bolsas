@@ -262,15 +262,7 @@ const AuthService = {
     }
     auth.onAuthStateChanged((user) => {
       if (user) {
-        // Validação adicional de domínio ou UID se necessário
-        const isAuthorizedAdmin = user.email === "contato@frassettobolsas.com.br" || user.uid === "v79uBwL2ZkP6B3SjG9v8N4m3K1w2";
-        if (isAuthorizedAdmin) {
-          if (callback) callback(user);
-        } else {
-          console.warn("Tentativa de acesso por usuário não-autorizado:", user.email);
-          auth.signOut();
-          if (callback) callback(null);
-        }
+        if (callback) callback(user);
       } else {
         if (callback) callback(null);
       }
