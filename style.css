@@ -1525,11 +1525,35 @@ footer {
   .menu-toggle {
     display: flex;
   }
+  .hero-container {
+    padding: 3rem 6% 2rem;
+    gap: 2rem;
+  }
   .hero-title {
-    font-size: 2.8rem;
+    font-size: 2.2rem;
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+  }
+  .hero-subtitle {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    padding: 0 4px;
+  }
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.8rem;
+  }
+  .hero-actions a {
+    width: 100%;
+    justify-content: center;
+    padding: 0.9rem 2rem;
+    font-size: 0.8rem;
   }
   .hero-image-frame {
-    width: 90%;
+    width: 100%;
+    padding: 0.8rem;
   }
   .featured-grid, .vitrine-grid {
     grid-template-columns: 1fr;
