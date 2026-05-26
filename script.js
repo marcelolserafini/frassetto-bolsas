@@ -1332,7 +1332,7 @@ function setupImgbbUploader() {
         .then(res => res.json())
         .then(data => {
           if (data.success) {
-            const imageUrl = SecurityUtils.sanitizeString(data.data.url);
+            const imageUrl = data.data.url;
             const imageInput = document.getElementById("prod-imagem");
 
             if (imageInput.value.trim() === "") {
