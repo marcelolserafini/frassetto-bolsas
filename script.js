@@ -927,6 +927,28 @@ function setupEventListeners() {
     });
   }
 
+  // Alternância de Abas no Painel Administrativo (Tab Switching)
+  document.querySelectorAll(".admin-menu-item[data-tab]").forEach(item => {
+    item.addEventListener("click", (e) => {
+      e.preventDefault();
+      document.querySelectorAll(".admin-menu-item").forEach(i => i.classList.remove("active"));
+      item.classList.add("active");
+
+      const tabId = item.getAttribute("data-tab");
+      document.querySelectorAll(".admin-tab-content").forEach(tab => {
+        tab.classList.remove("active");
+      });
+      const targetTab = document.getElementById(tabId);
+      if (targetTab) {
+        targetTab.classList.add("active");
+      }
+
+      if (tabId === "dashboard-tab") {
+        renderCharts();
+      }
+    });
+  });
+
   // Interceptador do Formulário de Autenticação com Login
   const loginForm = document.getElementById("login-form");
   if (loginForm) {
