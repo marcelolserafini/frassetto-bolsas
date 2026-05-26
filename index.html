@@ -157,47 +157,8 @@
   <section id="login-view" class="view-section">
     <div style="display: flex; justify-content: center; align-items: flex-start; min-height: calc(100vh - 200px); padding: 3rem 2rem;">
 
-      <!-- PAINEL A: Firebase NÃO configurado — exibido pelo JS -->
-      <div id="firebase-setup-panel" style="display: none; width: 100%; max-width: 520px;">
-        <div class="analytics-card" style="padding: 3rem; text-align: center; background: white; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-medium);">
-          <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔧</div>
-          <h2 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 0.5rem; color: var(--text-primary);">Configuração Inicial</h2>
-          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.6;">Para acessar o painel, conecte o Firebase do seu projeto. As chaves ficam salvas apenas neste navegador e nunca vão para o código público.</p>
-          <form id="login-firebase-setup-form">
-            <div class="form-group" style="text-align: left;">
-              <label class="form-label" for="setup-apiKey">API Key</label>
-              <input type="password" class="form-control" id="setup-apiKey" required placeholder="AIzaSy...">
-            </div>
-            <div class="form-row">
-              <div class="form-group" style="text-align: left;">
-                <label class="form-label" for="setup-projectId">Project ID</label>
-                <input type="text" class="form-control" id="setup-projectId" required placeholder="meu-projeto-123">
-              </div>
-              <div class="form-group" style="text-align: left;">
-                <label class="form-label" for="setup-authDomain">Auth Domain</label>
-                <input type="text" class="form-control" id="setup-authDomain" required placeholder="seu-projeto.firebaseapp.com">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group" style="text-align: left;">
-                <label class="form-label" for="setup-messagingSenderId">Sender ID</label>
-                <input type="text" class="form-control" id="setup-messagingSenderId" required placeholder="1076289...">
-              </div>
-              <div class="form-group" style="text-align: left;">
-                <label class="form-label" for="setup-appId">App ID</label>
-                <input type="text" class="form-control" id="setup-appId" required placeholder="1:107628...">
-              </div>
-            </div>
-            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 1rem; margin-top: 0.5rem;">
-              <i class="fas fa-plug"></i> Conectar e Continuar
-            </button>
-          </form>
-          <p id="setup-error-msg" style="color: #C85353; font-size: 0.82rem; margin-top: 1rem; display: none;"></p>
-        </div>
-      </div>
-
-      <!-- PAINEL B: Firebase configurado — login real -->
-      <div id="login-firebase-panel" style="display: none; width: 100%; max-width: 420px;">
+      <!-- PAINEL: Login Real Firebase -->
+      <div id="login-firebase-panel" style="width: 100%; max-width: 420px;">
         <div class="analytics-card" style="padding: 3rem; text-align: center; background: white; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-medium);">
           <h2 style="font-family: var(--font-serif); font-size: 2.2rem; margin-bottom: 0.5rem; color: var(--text-primary);">Acesso Restrito</h2>
           <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 2.5rem; text-transform: uppercase; letter-spacing: 2px;">Painel Frassetto Bolsas</p>
@@ -430,42 +391,6 @@
             </form>
           </div>
 
-          <!-- Configuração de Conexão com Firebase -->
-          <div class="analytics-card" style="max-width: 700px; margin-top: 2.5rem;">
-            <h4 style="font-family: var(--font-serif); font-size: 1.4rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--bg-primary); padding-bottom: 0.8rem;">Conexão Firebase (Nuvem Sem Expor Chaves no Código)</h4>
-            <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom: 1.5rem;">Para evitar expor suas chaves de API do Firebase publicamente no código fonte (ex: se subir o código para o GitHub Pages), você pode salvá-las de forma segura aqui. Elas ficarão salvas apenas no seu navegador e não no arquivo de código!</p>
-            
-            <form id="firebase-config-form">
-              <div class="form-group">
-                <label class="form-label" for="fb-apiKey">API Key (Chave de API)</label>
-                <input type="password" class="form-control" id="fb-apiKey" required placeholder="AIzaSy...">
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label" for="fb-projectId">Project ID (ID do Projeto)</label>
-                  <input type="text" class="form-control" id="fb-projectId" required placeholder="frassetto-bolsas-...">
-                </div>
-                <div class="form-group">
-                  <label class="form-label" for="fb-authDomain">Auth Domain</label>
-                  <input type="text" class="form-control" id="fb-authDomain" required placeholder="seu-projeto.firebaseapp.com">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label" for="fb-messagingSenderId">Messaging Sender ID</label>
-                  <input type="text" class="form-control" id="fb-messagingSenderId" required placeholder="107628...">
-                </div>
-                <div class="form-group">
-                  <label class="form-label" for="fb-appId">App ID</label>
-                  <input type="text" class="form-control" id="fb-appId" required placeholder="1:107628...">
-                </div>
-              </div>
-              <div class="form-actions" style="margin-top: 1rem; padding-top: 1rem;">
-                <button type="button" class="btn-secondary" id="clear-fb-btn" style="color:#C85353; border-color:#C85353;"><i class="fas fa-trash"></i> Limpar Conexão</button>
-                <button type="submit" class="btn-primary"><i class="fas fa-plug"></i> Salvar e Conectar</button>
-              </div>
-            </form>
-          </div>
 
           <!-- Gerenciador de Depoimentos -->
           <div class="analytics-card" style="max-width: 700px; margin-top: 2.5rem;">
