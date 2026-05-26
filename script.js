@@ -1543,4 +1543,19 @@ function setupScrollAnimations() {
     card.style.transition = "opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1)";
     observer.observe(card);
   });
+
+  // Revelação suave (reveal stagger) do banner editorial
+  const bannerEl = document.querySelector(".editorial-banner");
+  if (bannerEl && !bannerEl.classList.contains("revealed")) {
+    const bannerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("revealed");
+          bannerObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    bannerObserver.observe(bannerEl);
+  }
 }
