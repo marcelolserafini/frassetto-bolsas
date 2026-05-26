@@ -1556,8 +1556,26 @@ footer {
     padding: 0.8rem;
   }
   .featured-grid, .vitrine-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+  .product-name {
+    font-size: 1.1rem;
+  }
+  .product-price {
+    font-size: 1rem;
+  }
+  .product-description-short {
+    font-size: 0.72rem;
+    line-height: 1.4;
+    margin-bottom: 0.8rem;
+  }
+  .product-view-btn {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+  }
+  .product-image-wrapper {
+    margin-bottom: 0.8rem;
   }
   .footer-grid {
     grid-template-columns: 1fr;
