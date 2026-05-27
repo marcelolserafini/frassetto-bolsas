@@ -301,7 +301,7 @@ async function syncWithFirebase() {
     // 1. Configurações
     const settingsDoc = await db.collection("settings").doc("main").get();
     if (settingsDoc.exists) {
-      settings = settingsDoc.data();
+      settings = { ...DEFAULT_SETTINGS, ...settingsDoc.data() };
     } else {
       // Se não existir, tenta criar caso seja o admin principal autenticado
       if (auth.currentUser) {
@@ -546,27 +546,30 @@ function renderProductDetail(productId) {
   mainFrame.className = "main-image-frame";
   const mainImg = document.createElement("img");
   mainImg.id = "detail-main-img";
-  mainImg.src = SecurityUtils.validateImageUrl(prod.imagens[0]) ? prod.imagens[0] : "";
-  mainImg.alt = prod.nome;
+  const firstImg = (prod.imagens && prod.imagens.length > 0) ? prod.imagens[0] : "";
+  mainImg.src = SecurityUtils.validateImageUrl(firstImg) ? firstImg : "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=800&q=80";
+  mainImg.alt = prod.nome || "Produto";
   mainFrame.appendChild(mainImg);
   gallery.appendChild(mainFrame);
 
   const strip = document.createElement("div");
   strip.className = "thumbnails-strip";
-  prod.imagens.forEach((img, idx) => {
-    const thumb = document.createElement("div");
-    thumb.className = `thumb-image ${idx === 0 ? "active" : ""}`;
-    thumb.addEventListener("click", function() {
-      document.getElementById("detail-main-img").src = img;
-      document.querySelectorAll(".thumb-image").forEach(t => t.classList.remove("active"));
-      thumb.classList.add("active");
+  if (prod.imagens && Array.isArray(prod.imagens)) {
+    prod.imagens.forEach((img, idx) => {
+      const thumb = document.createElement("div");
+      thumb.className = `thumb-image ${idx === 0 ? "active" : ""}`;
+      thumb.addEventListener("click", function() {
+        document.getElementById("detail-main-img").src = img;
+        document.querySelectorAll(".thumb-image").forEach(t => t.classList.remove("active"));
+        thumb.classList.add("active");
+      });
+      const thumbImg = document.createElement("img");
+      thumbImg.src = img;
+      thumbImg.alt = "Miniatura";
+      thumb.appendChild(thumbImg);
+      strip.appendChild(thumb);
     });
-    const thumbImg = document.createElement("img");
-    thumbImg.src = img;
-    thumbImg.alt = "Miniatura";
-    thumb.appendChild(thumbImg);
-    strip.appendChild(thumb);
-  });
+  }
   gallery.appendChild(strip);
   container.appendChild(gallery);
 
@@ -582,17 +585,17 @@ function renderProductDetail(productId) {
 
   const title = document.createElement("h2");
   title.className = "detail-title";
-  title.textContent = prod.nome;
+  title.textContent = prod.nome || "Bolsa Artesanal";
   info.appendChild(title);
 
   const price = document.createElement("div");
   price.className = "detail-price";
-  price.textContent = prod.preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+  price.textContent = (prod.preco || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
   info.appendChild(price);
 
   const desc = document.createElement("p");
   desc.className = "detail-description";
-  desc.textContent = prod.detalhes;
+  desc.textContent = prod.detalhes || prod.descricao || "Sem descrição disponível.";
   info.appendChild(desc);
 
   // Ficha técnica
@@ -626,9 +629,9 @@ function renderProductDetail(productId) {
   actions.className = "detail-actions";
 
   const phone = SecurityUtils.validateWhatsappPhone(settings.whatsappPhone) || "5548999999999";
-  const rawMsg = settings.whatsappMessageTemplate
-    .replace("{nome}", prod.nome)
-    .replace("{preco}", prod.preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }));
+  const rawMsg = (settings.whatsappMessageTemplate || DEFAULT_SETTINGS.whatsappMessageTemplate)
+    .replace("{nome}", prod.nome || "Bolsa")
+    .replace("{preco}", (prod.preco || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }));
   const cleanMsg = encodeURIComponent(rawMsg);
 
   const buyBtn = document.createElement("a");
