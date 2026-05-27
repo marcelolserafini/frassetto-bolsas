@@ -941,6 +941,51 @@ function setupEventListeners() {
     });
   }
 
+  // Links de Rolagem (Scroll suave) na Home
+  document.querySelectorAll(".scroll-link").forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute("data-scroll");
+      const targetSection = document.getElementById(targetId);
+
+      if (window.location.hash !== "#vitrine" && window.location.hash !== "") {
+        window.location.hash = "#vitrine";
+        setTimeout(() => {
+          scrollSmoothlyTo(targetSection);
+        }, 300);
+      } else {
+        scrollSmoothlyTo(targetSection);
+      }
+    });
+  });
+
+  function scrollSmoothlyTo(element) {
+    if (!element) return;
+    const targetPosition = element.offsetTop - 90;
+    const startPosition = window.pageYOffset || document.documentElement.scrollTop;
+    const distance = targetPosition - startPosition;
+    const duration = 1200;
+    let start = null;
+
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function animationStep(timestamp) {
+      if (!start) start = timestamp;
+      const progress = timestamp - start;
+      const percentage = Math.min(progress / duration, 1);
+
+      window.scrollTo(0, startPosition + distance * easeOutCubic(percentage));
+
+      if (progress < duration) {
+        window.requestAnimationFrame(animationStep);
+      }
+    }
+
+    window.requestAnimationFrame(animationStep);
+  }
+
   // Alternância de Abas no Painel Administrativo (Tab Switching)
   document.querySelectorAll(".admin-menu-item[data-tab]").forEach(item => {
     item.addEventListener("click", (e) => {
